@@ -8,7 +8,11 @@
 	},
 	"dependencies": {
 		"react": "16.0.0-alpha.6",
-		"react-native": "0.44.2"
+		"react-native": "0.44.2",
+		"react-native-elements": "^0.16.0",
+		"react-native-fs": "^2.5.1",
+		"react-native-html-parser": "0.0.5",
+		"react-native-vector-icons": "^4.3.0"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",

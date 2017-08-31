@@ -11,21 +11,14 @@ import {
   Text,
   View
 } from 'react-native';
+import { testDom } from "./app/util/parser";
+import JobList from "./app/components/JobList";
 
 export default class V2Job extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+          <JobList/>
       </View>
     );
   }
@@ -34,20 +27,10 @@ export default class V2Job extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    backgroundColor: '#E2E2E2',
   },
 });
 
 AppRegistry.registerComponent('V2Job', () => V2Job);
+// testDom();
+
