@@ -3173,6 +3173,10 @@ react-native-html-parser@0.0.5:
   version "0.0.5"
   resolved "http://registry.npm.taobao.org/react-native-html-parser/download/react-native-html-parser-0.0.5.tgz#210a76626b7a472a4b5f5a85cb24b37b10344126"
 
+react-native-picker@^4.1.2:
+  version "4.1.2"
+  resolved "http://registry.npm.taobao.org/react-native-picker/download/react-native-picker-4.1.2.tgz#ead116a53a420cd3eafc33b705f69fb5e63a73d4"
+
 react-native-side-menu@^1.0.2:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/react-native-side-menu/download/react-native-side-menu-1.0.2.tgz#863f8bb253b7512c8c62cefc477aecd653383ddb"

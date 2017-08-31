@@ -47,7 +47,7 @@ export default class JobCell extends Component {
                         <View style={styles.badgeContainer}>
                             <Badge value={this.props.replyCount}
                                 containerStyle={{backgroundColor: '#AAB0C6'}}
-                                textStyle={{color:'#FFF', fontSize: 12, fontWeight: 'bold'}}
+                                textStyle={{color:'#FFF', fontSize: 10, fontWeight: 'bold'}}
                             />
                         </View>
                     </View>

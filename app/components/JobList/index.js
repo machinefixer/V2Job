@@ -7,10 +7,13 @@ import {
 
 import { Header } from 'react-native-elements';
 import { Icon } from 'react-native-elements';
+import  Picker  from 'react-native-picker';
 
 import JobCell from '../JobCell';
 import styles from './styles';
-import {parseJobCell, testDom} from '../../util/parser';
+import { parseJobCell } from '../../util/parser';
+
+const cityArray = ['无','北京', '上海', '广州', '深圳', '浙江', '成都', '南京'];
 
 export default class JobList extends Component {
     constructor(props) {
@@ -21,6 +24,7 @@ export default class JobList extends Component {
             refreshing: false,
             page: 1,
             jobArray: [],
+            cityArray: cityArray,
         }
     }
 
@@ -37,6 +41,28 @@ export default class JobList extends Component {
         });
     };
 
+    _filterButtonClicked = () => {
+        console.log("navbar right button clicked");
+        Picker.init({
+            pickerData: this.state.cityArray,
+            selectedValue: ['无'],
+            pickerTitleText: '请选择城市',
+            pickerConfirmBtnColor: [77, 82, 86, 1],
+            pickerCancelBtnColor: [77, 82, 86, 1],
+            pickerTitleColor: [77, 82, 86, 1],
+            onPickerConfirm: data => {
+                console.log('picker confirm: ' + data);
+            },
+            onPickerCancel: data => {
+                console.log('picker cancel: ' + data);
+            },
+            onPickerSelect: data => {
+                console.log('picker select: ' + data);
+            },
+        });
+        Picker.show();
+    };
+
     render() {
         return (
             <View style={styles.container}>
@@ -45,56 +71,13 @@ export default class JobList extends Component {
                           type="font-awesome"
                           color="#FFF"
                           size={20}
-                          onPress={ () => console.log("navbar right button clicked")}/>}
+                          onPress={() => {this._filterButtonClicked()}}
+                    />
+                }
                 centerComponent={{text:"X Project", style:{color: '#fff', fontSize: 18}}}
                 outerContainerStyles={{backgroundColor: '#333344'}}/>
                 <FlatList style={styles.jobListView}
-                          data={ this.state.jobArray
-                              // [
-                          //     {
-                          //         avatarImageURL: "https://www.baidu.com",
-                          //         authorName: "Someone0",
-                          //         jobTitle: "We're recruiting",
-                          //         replyCount: "300"
-                          //     },
-                          //     {
-                          //         avatarImageURL: "https://www.baidu.com",
-                          //         authorName: "Someone1",
-                          //         jobTitle: "We're recruiting",
-                          //         replyCount: "300"
-                          //     },
-                          //     {
-                          //         avatarImageURL: "https://www.baidu.com",
-                          //         authorName: "Someone2",
-                          //         jobTitle: "We're recruiting",
-                          //         replyCount: "300"
-                          //     },
-                          //     {
-                          //         avatarImageURL: "https://www.baidu.com",
-                          //         authorName: "Someone3",
-                          //         jobTitle: "We're recruiting",
-                          //         replyCount: "300"
-                          //     },
-                          //     {
-                          //         avatarImageURL: "https://www.baidu.com",
-                          //         authorName: "Someone4",
-                          //         jobTitle: "We're recruiting",
-                          //         replyCount: "300"
-                          //     },
-                          //     {
-                          //         avatarImageURL: "https://www.baidu.com",
-                          //         authorName: "Someone5",
-                          //         jobTitle: "We're recruiting",
-                          //         replyCount: "300"
-                          //     },
-                          //     {
-                          //         avatarImageURL: "https://www.baidu.com",
-                          //         authorName: "Someone6",
-                          //         jobTitle: "We're recruiting",
-                          //         replyCount: "300"
-                          //     },
-                          // ]
-                          }
+                          data={ this.state.jobArray}
                           renderItem={
                               ({item}) => <JobCell avatarImageURL={item.avatarImageURL}
                                                    authorName={item.authorName}
