@@ -10,19 +10,12 @@ export function testDom() {
     parseJobCell();
 }
 
-export function parseJobCell(callback) {
-    fetch('https://www.v2ex.com/go/jobs').then(response => {
-        // console.log(response._bodyBlob);
-        // const someString = /<html(.+)/.exec(response.text())[1];
-        // const parser = new DOMParser.DOMParser();
-        // const parsed = parser.parseFromString(someString, 'text/html');
-        // console.log("parsed: " + parsed);
-
-        let reader = new FileReader;
-        reader.addEventListener("loadend", function() {
-            console.log('result: ' + reader.result);
+export function parseJobCell(callback, page=1) {
+    fetch('https://www.v2ex.com/go/jobs?p=' + page)
+        .then(response => response.text())
+        .then(text => {
             const parser = new DOMParser.DOMParser();
-            const parsed = parser.parseFromString(reader.result, 'text/html');
+            const parsed = parser.parseFromString(text, 'text/html');
             let trArray = parsed.querySelect('#TopicsNode tr');
             console.log(trArray);
 
@@ -45,8 +38,8 @@ export function parseJobCell(callback) {
 
                 console.log(tr.querySelect('a'));
                 let spanArray = tr.querySelect('span');
-                let publishTime = spanArray[1].textContent.split('•')[1];
-                console.log('publishTime: ' + publishTime);
+                let lastCommentTime = spanArray[1].textContent.split('•')[1];
+                console.log('lastCommentTime: ' + lastCommentTime);
                 console.log(tr.querySelect('span'));
 
                 jobArray.push({
@@ -54,12 +47,26 @@ export function parseJobCell(callback) {
                     jobTitle: jobTitle,
                     authorName: authorName,
                     replyCount: replyCount,
-                    publishTime: publishTime,
+                    lastCommentTime: lastCommentTime,
                 });
             }
 
             callback(jobArray);
-        });
-        reader.readAsText(response._bodyBlob);
-    });
+
+        })
+        .catch(err => reject(err));
+
+        // console.log(response._bodyBlob);
+        // const someString = /<html(.+)/.exec(response.text())[1];
+        // const parser = new DOMParser.DOMParser();
+        // const parsed = parser.parseFromString(someString, 'text/html');
+        // console.log("parsed: " + parsed);
+
+        // let reader = new FileReader;
+        // reader.addEventListener("loadend", function() {
+        //
+        //     callback(jobArray);
+        // });
+        // reader.readAsText(response._bodyBlob);
+    // });
 }

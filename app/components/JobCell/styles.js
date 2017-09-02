@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
 
     jobTitleTextView: {
-        fontSize: 14,
+        fontSize: 15,
         color: '#4D5256',
         marginTop: 8,
         marginBottom: 8,
