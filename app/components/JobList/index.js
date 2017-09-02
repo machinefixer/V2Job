@@ -1,12 +1,9 @@
 import React, { Component }from 'react';
 import {
-    AsyncStorage,
     FlatList,
     View,
-    RefreshControl,
 } from 'react-native';
 
-import { Header } from 'react-native-elements';
 import { Icon } from 'react-native-elements';
 import  Picker  from 'react-native-picker';
 
@@ -17,6 +14,22 @@ import { parseJobCell } from '../../util/parser';
 const cityArray = ['无','北京', '上海', '广州', '深圳', '杭州', '成都', '南京'];
 
 export default class JobList extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const {state, setParams} = navigation;
+        return {
+            title: "V2Job",
+            headerTintColor: "#FFF",
+            headerStyle: { backgroundColor: '#333344' },
+            headerRight: <Icon name="filter"
+                               type="font-awesome"
+                               color="#FFF"
+                               size={20}
+                               iconStyle={{marginRight: 8}}
+                               onPress={ () => {state.params.filterButtonClicked()}}
+                               underlayColor="rgba(255, 255, 255, 0)"/>,
+        }
+    };
+
     constructor(props) {
         super(props);
 
@@ -32,6 +45,9 @@ export default class JobList extends Component {
 
     componentDidMount() {
         this._refreshData();
+
+        // Set navbar button actions
+        this.props.navigation.setParams({ filterButtonClicked: this._filterButtonClicked });
     }
 
     _refreshData = () => {
@@ -92,7 +108,7 @@ export default class JobList extends Component {
         Picker.show();
     };
 
-    _filterJobsByCity= (jobs, city) => {
+    _filterJobsByCity = (jobs, city) => {
         let copyOfJobArray = JSON.parse(JSON.stringify(jobs));
         if (city === '无') {
             return copyOfJobArray;
@@ -108,22 +124,16 @@ export default class JobList extends Component {
         return res;
     };
 
+    _cellClickedHandler = () => {
+        console.log('cell clicked');
+        const { navigate } = this.props.navigation;
+        navigate('JobDetail')
+    };
+
     render() {
         let filteredJobArray = this._filterJobsByCity(this.state.jobArray, this.state.selectedCity);
         return (
             <View style={styles.container}>
-                <Header
-                    rightComponent={
-                    <Icon name="filter"
-                          type="font-awesome"
-                          color="#FFF"
-                          size={22}
-                          onPress={() => {this._filterButtonClicked()}}
-                          underlayColor="rgba(255, 255, 255, 0)"
-                    />
-                    }
-                centerComponent={{text:"X Project", style:{color: '#fff', fontSize: 18}}}
-                outerContainerStyles={{backgroundColor: '#333344'}}/>
                 <FlatList style={styles.jobListView}
                           data={filteredJobArray}
                           renderItem={
@@ -131,7 +141,8 @@ export default class JobList extends Component {
                                                    authorName={item.authorName}
                                                    jobTitle={item.jobTitle}
                                                    replyCount={item.replyCount}
-                                                   publishTime={item.publishTime}
+                                                   lastCommentTime={item.lastCommentTime}
+                                                   cellOnPress={() => this._cellClickedHandler()}
                               />
                           }
                           keyExtractor={item => item.jobTitle+item.authorName+Math.random()%100}

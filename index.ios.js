@@ -7,30 +7,25 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View
 } from 'react-native';
-import { testDom } from "./app/util/parser";
+
+import { StackNavigator } from 'react-navigation';
+
 import JobList from "./app/components/JobList";
+import JobDetail from "./app/components/JobDetail";
 
 export default class V2Job extends Component {
   render() {
     return (
-      <View style={styles.container}>
-          <JobList/>
-      </View>
+        <Stack/>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E2E2E2',
-  },
+const Stack = StackNavigator({
+    JobList: { screen: JobList },
+    JobDetail: { screen: JobDetail }
 });
 
 AppRegistry.registerComponent('V2Job', () => V2Job);
-// testDom();
 

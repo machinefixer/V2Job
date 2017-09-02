@@ -5,9 +5,31 @@ import {
     Image,
 } from 'react-native';
 
-import styles from './styles';
+import { NavigationActions } from 'react-navigation';
 
-export default class JobDetail extends component {
+import styles from './styles';
+import { Icon } from 'react-native-elements';
+
+export default class JobDetail extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const { navigate } = navigation;
+        return {
+            title: "工作详情",
+            headerTintColor: "#FFF",
+            headerBackTitle: "null",
+            headerStyle: { backgroundColor: '#333344' },
+            headerLeft: <Icon name="chevron-left"
+                              type="material-community"
+                              color="#FFF"
+                              size={35}
+                              iconStyle={{marginLeft: 8}}
+                              onPress={ () => {
+                                  navigation.dispatch(NavigationActions.back())
+                              }}
+                              underlayColor="rgba(255, 255, 255, 0)"/>,
+        };
+    };
+
     static propTyps = {
         avatarImageURL: PropTypes.string.isRequired,
         authorName: PropTypes.string.isRequired,

@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
 
     jobListView: {
         flex: 1,
-        marginTop: 70,
     }
 
 });

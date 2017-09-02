@@ -18,6 +18,7 @@ export default class JobCell extends Component {
         jobTitle: PropTypes.string.isRequired,
         replyCount: PropTypes.string.isRequired,
         lastCommentTime: PropTypes.string.isRequired,
+        cellOnPress: PropTypes.func.isRequired,
     };
 
     constructor (props) {
@@ -27,15 +28,9 @@ export default class JobCell extends Component {
     render () {
         return (
             <View style={styles.cellContainer}>
-                <TouchableHighlight style={{flex:1}} onPress={ () => console.log("JobCell clicked.") } underlayColor={ '#D3D3D3' }>
+                <TouchableHighlight style={{flex:1}} onPress={ () => { this.props.cellOnPress() }} underlayColor={ '#D3D3D3' }>
                     <View style={styles.contentContainer}>
                         <View style={styles.avatarContainer}>
-                            {/*<Avatar small*/}
-                                    {/*rounded*/}
-                                    {/*source={{uri: this.props.avatarImageURL }}*/}
-                                    {/*onPress={ () => console.log("JobCell avatar image clicked.") }*/}
-                                    {/*activeOpacity={0.7}*/}
-                            {/*/>*/}
                             <Image
                                 source={{
                                     uri: this.props.avatarImageURL,

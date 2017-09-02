@@ -1,14 +1,6 @@
 import DOMParser from 'react-native-html-parser';
 // import htmlData from '../../data.html';
-import RNFS from 'react-native-fs';
-
-export function testDom() {
-    // const html = `<p>Hello world <b>world</b> <i>foo</i> abc</p>`;
-    // const parser = new DOMParser.DOMParser();
-    // const parsed = parser.parseFromString(html, 'text/html');
-    // console.log("parsed:" + parsed);
-    parseJobCell();
-}
+// import RNFS from 'react-native-fs';
 
 export function parseJobCell(callback, page=1) {
     fetch('https://www.v2ex.com/go/jobs?p=' + page)
