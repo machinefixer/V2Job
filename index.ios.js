@@ -24,7 +24,7 @@ export default class V2Job extends Component {
 
 const Stack = StackNavigator({
     JobList: { screen: JobList },
-    JobDetail: { screen: JobDetail }
+    JobDetail: { screen: JobDetail },
 });
 
 AppRegistry.registerComponent('V2Job', () => V2Job);

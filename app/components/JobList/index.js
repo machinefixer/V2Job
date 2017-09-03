@@ -2,6 +2,7 @@ import React, { Component }from 'react';
 import {
     FlatList,
     View,
+    Button,
 } from 'react-native';
 
 import { Icon } from 'react-native-elements';
@@ -10,23 +11,22 @@ import  Picker  from 'react-native-picker';
 import JobCell from '../JobCell';
 import styles from './styles';
 import { parseJobCell } from '../../util/parser';
+import JobListViewNavbarRightButton from '../JobListViewNavbarRightButton';
 
 const cityArray = ['无','北京', '上海', '广州', '深圳', '杭州', '成都', '南京'];
 
 export default class JobList extends Component {
     static navigationOptions = ({ navigation }) => {
         const {state, setParams} = navigation;
+        console.log('state.params: ' + state.params);
         return {
             title: "V2Job",
             headerTintColor: "#FFF",
             headerStyle: { backgroundColor: '#333344' },
-            headerRight: <Icon name="filter"
-                               type="font-awesome"
-                               color="#FFF"
-                               size={20}
-                               iconStyle={{marginRight: 8}}
-                               onPress={ () => {state.params.filterButtonClicked()}}
-                               underlayColor="rgba(255, 255, 255, 0)"/>,
+            headerRight: <JobListViewNavbarRightButton
+                shouldShowIcon={true}
+                filterButtonHandler={() => {state.params.filterButtonClicked()}}
+            />
         }
     };
 
@@ -40,6 +40,7 @@ export default class JobList extends Component {
             jobArray: [],
             selectedCity: cityArray[0],
             cityArray: cityArray,
+            filterModeActivated: false,
         }
     }
 
@@ -47,7 +48,9 @@ export default class JobList extends Component {
         this._refreshData();
 
         // Set navbar button actions
-        this.props.navigation.setParams({ filterButtonClicked: this._filterButtonClicked });
+        this.props.navigation.setParams({
+            filterButtonClicked: this._filterButtonClicked,
+        });
     }
 
     _refreshData = () => {
@@ -124,10 +127,10 @@ export default class JobList extends Component {
         return res;
     };
 
-    _cellClickedHandler = () => {
+    _cellClickedHandler = (item) => {
         console.log('cell clicked');
         const { navigate } = this.props.navigation;
-        navigate('JobDetail')
+        navigate('JobDetail', {authorName: item.authorName, jobTitle: item.jobTitle, topicID: item.topicID})
     };
 
     render() {
@@ -142,7 +145,8 @@ export default class JobList extends Component {
                                                    jobTitle={item.jobTitle}
                                                    replyCount={item.replyCount}
                                                    lastCommentTime={item.lastCommentTime}
-                                                   cellOnPress={() => this._cellClickedHandler()}
+                                                   cellItem={item}
+                                                   cellOnPress={(cellItem) => this._cellClickedHandler(cellItem)}
                               />
                           }
                           keyExtractor={item => item.jobTitle+item.authorName+Math.random()%100}

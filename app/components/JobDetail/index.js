@@ -1,14 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import {
+    ScrollView,
     View,
     Text,
-    Image,
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';
+import Markdown from 'react-native-simple-markdown';
+import { Icon } from 'react-native-elements';
 
 import styles from './styles';
-import { Icon } from 'react-native-elements';
+import V2EX from '../../util/api';
 
 export default class JobDetail extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -30,24 +32,56 @@ export default class JobDetail extends Component {
         };
     };
 
-    static propTyps = {
-        avatarImageURL: PropTypes.string.isRequired,
-        authorName: PropTypes.string.isRequired,
-    };
-
     constructor (props) {
         super(props);
+        this.state ={
+            markdownContent: '',
+            jobTitle: '',
+            authorName: '',
+            topicID: '',
+        }
     }
+
+    componentDidMount() {
+        const { params } = this.props.navigation.state;
+        this.setState({
+            jobTitle: params.jobTitle,
+            authorName: params.authorName,
+            topicID: params.topicID,
+        });
+
+        this._refreshData(params.topicID, (content) => {
+            this.setState({
+                markdownContent: content,
+            });
+        });
+    }
+
+    _refreshData = (topicID, callback) => {
+        V2EX.getTopicDetailByID(topicID, callback);
+    };
 
     render () {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={styles.header}>
+                    <Text style={ styles.jobTitleTextView }>
+                        {this.state.jobTitle}
+                    </Text>
+                    <View style={ styles.infoContainer }>
+                        <Text style={ styles.authorNameTextView }>
+                            {this.state.authorName}
+                        </Text>
+                        <Text style={ styles.infoTextView }>
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.content}>
+                    <Markdown>
+                        {this.state.markdownContent}
+                    </Markdown>
                 </View>
-            </View>
-
+            </ScrollView>
         )
     }
 }

@@ -19,6 +19,7 @@ export default class JobCell extends Component {
         replyCount: PropTypes.string.isRequired,
         lastCommentTime: PropTypes.string.isRequired,
         cellOnPress: PropTypes.func.isRequired,
+        cellItem: PropTypes.object.isRequired,
     };
 
     constructor (props) {
@@ -28,7 +29,7 @@ export default class JobCell extends Component {
     render () {
         return (
             <View style={styles.cellContainer}>
-                <TouchableHighlight style={{flex:1}} onPress={ () => { this.props.cellOnPress() }} underlayColor={ '#D3D3D3' }>
+                <TouchableHighlight style={{flex:1}} onPress={ () => { this.props.cellOnPress(this.props.cellItem) }} underlayColor={ '#D3D3D3' }>
                     <View style={styles.contentContainer}>
                         <View style={styles.avatarContainer}>
                             <Image

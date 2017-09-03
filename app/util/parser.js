@@ -22,6 +22,9 @@ export function parseJobCell(callback, page=1) {
                 let jobTitle = aArray[1].textContent;
                 console.log('jobTitle:' + jobTitle);
 
+                let topicID = aArray[1].getAttribute('href').split('/t/')[1].split('#')[0];
+                console.log('topicID:' + topicID);
+
                 let authorName = aArray[2].textContent;
                 console.log('author: ' + authorName);
 
@@ -37,6 +40,7 @@ export function parseJobCell(callback, page=1) {
                 jobArray.push({
                     avatarImageURL: avatarImageURL,
                     jobTitle: jobTitle,
+                    topicID: topicID,
                     authorName: authorName,
                     replyCount: replyCount,
                     lastCommentTime: lastCommentTime,
