@@ -1,6 +1,13 @@
 # V2Job
 V2EX [酷工作] 板块查看工具 - Powered By ReactNative
 
+### Screenshots
+
+
+|             |                    |                             |                                         |
+| ------------ | ------------------ | --------------------------- | ----------------------------------------|
+|![Job List](./screenshots/scnshot_1.png)  |  ![City Picker](./screenshots/scnshot_2.png)  | ![Filtered Job List](./screenshots/scnshot_3.png) | ![Job Detail](./screenshots/scnshot_4.png)|
+
 ### Quick Start
 - Clone repo
 - `cd V2Job`
